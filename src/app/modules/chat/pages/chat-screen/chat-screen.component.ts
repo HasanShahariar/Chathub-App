@@ -22,6 +22,7 @@ export class ChatScreenComponent implements OnInit {
   myUserId: void;
 
   @ViewChild('chatContainer') chatContainer!: ElementRef;
+  ChatFriend: any;
 
   constructor(
     private _service: ChatService,
@@ -104,10 +105,12 @@ debugger
   }
 
 
-  getChatHistory(receiverId) {
+  getChatHistory(receiver) {
+    debugger
+    this.ChatFriend = receiver.FullName;
     
-    this.receiverId = receiverId;
-    this._service.getChatHistory(this.myUserId,receiverId).subscribe(
+    this.receiverId = receiver.Id;
+    this._service.getChatHistory(this.myUserId,receiver.Id).subscribe(
       (data) => {
         
         this.chatHistory = data.Data;

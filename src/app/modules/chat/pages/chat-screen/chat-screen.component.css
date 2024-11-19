@@ -62,3 +62,7 @@
     display: inline-block;
     font-size: .9375rem;
 }
+.name-header{
+    padding: 16px 23px;
+    background: #d3d3d3;
+}

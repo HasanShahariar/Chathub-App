@@ -2,13 +2,14 @@
   <div class="d-flex h-100 px-3 py-3 gap-3">
     <aside class="user-list-section  section">
       <div class="">
-        <div *ngFor="let user of userList" class="user" (click)="getChatHistory(user.Id)">
+        <div *ngFor="let user of userList" class="user" (click)="getChatHistory(user)">
           <img src="assets/media/300-1.jpg" alt="">
           <p>{{user.FullName}}</p>
         </div>
       </div>
     </aside>
     <div class="chat-section section">
+      <div class="name-header">{{ChatFriend}}</div>
       <div class="chat-canvas" #chatContainer>
 
         <div *ngFor="let item of chatHistory"
