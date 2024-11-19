@@ -1,0 +1,57 @@
+<div class="wrapper">
+  <div class="d-flex h-100 px-3 py-3 gap-3">
+    <aside class="user-list-section  section">
+      <div class="">
+        <div *ngFor="let user of userList" class="user" (click)="getChatHistory(user.Id)">
+          <img src="assets/media/300-1.jpg" alt="">
+          <p>{{user.FullName}}</p>
+        </div>
+      </div>
+    </aside>
+    <div class="chat-section section">
+      <div class="chat-canvas" #chatContainer>
+
+        <div *ngFor="let item of chatHistory"
+
+        [ngClass]="{
+          'd-flex justify-content-end': item.ReceiverId === receiverId,
+          
+          
+      }"
+        >
+          <div [ngClass]="{
+            'receiver-message': item.ReceiverId === myUserId,
+            'sender-message': item.ReceiverId === receiverId,
+            
+        }">
+            <span>{{item.Messages}}</span>
+          </div>
+          </div>
+
+
+          <!-- <div *ngFor="let item of messages">
+          <span>{{item.message}}</span>
+        </div> -->
+
+
+          <!-- <ul >
+          <li *ngFor="let item of chatHistory">
+            <strong>{{ msg.user }}:</strong> <span> {{ item.message }}</span>
+          </li>
+        </ul> -->
+        </div>
+        <div class="px-5 mt-3 w-100">
+
+          <span *ngIf="isConnected" class="connected"></span>
+          <span *ngIf="!isConnected" class="not-connected"></span>
+
+
+          <div class="d-flex justify-content-center gap-4" *ngIf="chatHistory">
+            <input class="form-control" type="text" [(ngModel)]="message" placeholder="Enter a message"  (keydown.enter)="sendMessage()" />
+            <button    (click)="sendMessage()" class="btn btn-secondary">Send</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,31 @@
+<section>
+  <form [formGroup]="loginForm">
+    <div class="auth-section">
+      <div class="login-container">
+        <div class="row border-bottom mb-3 login-header">
+          <div class="col-12 text-center">Chat Hub</div>
+
+        </div>
+        <div class="row">
+          <div class="col-3">User Name</div>
+          <div class="col-1">:</div>
+          <div class="col-8">
+            <input formControlName="userName" type="text" class="form-control">
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-3">Password</div>
+          <div class="col-1">:</div>
+          <div class="col-8">
+            <input formControlName="password" type="password" class="form-control">
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12 text-end mt-3">
+            <button class="btn btn-primary" (click)="onSubmit()">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

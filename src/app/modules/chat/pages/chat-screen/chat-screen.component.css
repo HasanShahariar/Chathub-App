@@ -1,0 +1,64 @@
+.wrapper{
+    height: 100vh;
+    background-color: rgb(230, 233, 236);
+}
+.section{
+    background: white;
+    border-radius: 13px;
+}
+
+.user-list-section{
+    width: 30%;
+}
+.chat-section{
+    width: 69%;
+}
+.user{
+    background: #efefef;
+    padding: 12px 18px;
+    border-radius: 8px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.user p{
+    font-weight: 500;
+    margin: 0;
+}
+.user img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+.user-list-section > div{
+    height: 100%;
+    padding: 15px;
+    overflow: auto;
+}
+.chat-canvas{
+    height: 83vh;
+    overflow: auto;
+}
+
+.receiver-message{
+  
+    background-color: #dadadd;
+    margin: 10px;
+    padding: 6px 13px;
+    border-radius: 20px;
+    color: rgb(29, 29, 29);
+    display: inline-block;
+    font-size: .9375rem;
+}
+.sender-message{
+
+    background-color: #483fd1;
+    margin: 10px;
+    padding: 6px 13px;
+    border-radius: 20px;
+    color: white;
+    display: inline-block;
+    font-size: .9375rem;
+}
