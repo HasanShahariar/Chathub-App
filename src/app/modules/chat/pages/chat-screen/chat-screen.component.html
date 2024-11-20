@@ -1,58 +1,59 @@
 <div class="wrapper">
-  <div class="d-flex h-100 px-3 py-3 gap-3">
-    <aside class="user-list-section  section">
+  <div class="section-wrapper">
+    <aside class="user-list-section  section" [ngClass]="{'d-none':isMobileScreen && isChatScreen==true,'d-block':isMobileScreen && isChatScreen==false }">
       <div class="">
-        <div *ngFor="let user of userList" class="user" (click)="getChatHistory(user)">
-          <img src="assets/media/300-1.jpg" alt="">
-          <p>{{user.FullName}}</p>
+        <div *ngFor="let user of userList" class="user" (click)="selectChatFriend(user)"
+        [ngClass]="{'selected':user.Id==this.chatFriend.Id}">
+        <img src="assets/media/300-1.jpg" alt="">
+        <p>{{user.FullName}}</p>
+ 
         </div>
       </div>
     </aside>
-    <div class="chat-section section">
-      <div class="name-header">{{ChatFriend}}</div>
+    <div class="chat-section section" [ngClass]="{'d-none':isMobileScreen && isChatScreen==false, 'd-block':isMobileScreen && isChatScreen==false}" >
+      <div class="name-header"> <a *ngIf="isMobileScreen" class="btn-goto" (click)="goToList()"><i class="fa-solid fa-arrow-left"></i></a> {{chatFriend.FullName}}</div>
       <div class="chat-canvas" #chatContainer>
 
-        <div *ngFor="let item of chatHistory"
-
-        [ngClass]="{
+        <div *ngFor="let item of chatHistory" [ngClass]="{
           'd-flex justify-content-end': item.ReceiverId === receiverId,
           
           
-      }"
-        >
+      }">
           <div [ngClass]="{
             'receiver-message': item.ReceiverId === myUserId,
             'sender-message': item.ReceiverId === receiverId,
             
         }">
             <span>{{item.Messages}}</span>
+       
           </div>
-          </div>
+        </div>
 
 
-          <!-- <div *ngFor="let item of messages">
+        <!-- <div *ngFor="let item of messages">
           <span>{{item.message}}</span>
         </div> -->
 
 
-          <!-- <ul >
+        <!-- <ul >
           <li *ngFor="let item of chatHistory">
             <strong>{{ msg.user }}:</strong> <span> {{ item.message }}</span>
           </li>
         </ul> -->
+      </div>
+      <div class="writting-section">
+
+        <span *ngIf="isConnected" class="connected"></span>
+        <span *ngIf="!isConnected" class="not-connected"></span>
+
+
+        <div class="d-flex justify-content-center gap-2" *ngIf="chatHistory">
+          <input class="form-control" type="text" [(ngModel)]="message" placeholder="Enter a message"
+            (keydown.enter)="sendMessage()" />
+            <a (click)="sendMessage()" class="send-btn"><i class="fa-regular fa-circle-right"></i></a>
         </div>
-        <div class="px-5 mt-3 w-100">
 
-          <span *ngIf="isConnected" class="connected"></span>
-          <span *ngIf="!isConnected" class="not-connected"></span>
-
-
-          <div class="d-flex justify-content-center gap-4" *ngIf="chatHistory">
-            <input class="form-control" type="text" [(ngModel)]="message" placeholder="Enter a message"  (keydown.enter)="sendMessage()" />
-            <button    (click)="sendMessage()" class="btn btn-secondary">Send</button>
-          </div>
-
-        </div>
       </div>
     </div>
   </div>
+</div>

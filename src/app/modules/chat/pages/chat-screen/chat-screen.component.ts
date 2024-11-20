@@ -22,7 +22,9 @@ export class ChatScreenComponent implements OnInit {
   myUserId: void;
 
   @ViewChild('chatContainer') chatContainer!: ElementRef;
-  ChatFriend: any;
+  chatFriend: any;
+  isChatScreen: boolean = null;
+  isMobileScreen: boolean;
 
   constructor(
     private _service: ChatService,
@@ -30,6 +32,12 @@ export class ChatScreenComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (window.innerWidth <= 768) {
+      this.isMobileScreen = true;
+      this.isChatScreen = false
+  } else {
+    this.isMobileScreen = false;
+  }
     
     this.getMyUserId()
     
@@ -37,7 +45,7 @@ export class ChatScreenComponent implements OnInit {
       
       this.messages.push(msg);
       
-debugger
+
       var message = {
         Messages: msg.message,
         ReceiverId: this.myUserId,
@@ -62,13 +70,9 @@ debugger
     const storedData = localStorage.getItem("chathub-credential");
 
     if (storedData) {
-      // Parse the data from JSON string to an object
       const parsedData = JSON.parse(storedData);
-
-      // Access the UserId (assuming 'UserId' is a property in the stored data)
-      const myUserId = parsedData.UserId;
       this.myUserId = parsedData.UserId;
-      this.getAllUsers(myUserId)
+      this.getAllUsers(this.myUserId)
 
     } else {
       console.warn('No credentials found in localStorage');
@@ -81,9 +85,9 @@ debugger
       (data) => {
         this.userList = data.Data;
         this.userList = this.userList.filter(user => user.Id !== myUserId);
-
-        this.getChatHistory(this.userList[0].Id)
-
+        this.chatFriend = this.userList[0];
+        
+        this.getChatHistory(this.chatFriend.Id)
         console.log(this.userList);
       },
       (err) => {
@@ -103,14 +107,24 @@ debugger
       this.message = ''; // Clear the input after sending
     }
   }
+  selectChatFriend(chatFriend){
+
+    this.chatFriend = chatFriend;
+    this.getChatHistory(chatFriend.Id)
+    this.isChatScreen = true;
+  }
+
+  goToList(){
+    this.isChatScreen = false;
+  }
 
 
-  getChatHistory(receiver) {
-    debugger
-    this.ChatFriend = receiver.FullName;
+  getChatHistory(chatFriendId) {
     
-    this.receiverId = receiver.Id;
-    this._service.getChatHistory(this.myUserId,receiver.Id).subscribe(
+    
+    
+    this.receiverId = chatFriendId;
+    this._service.getChatHistory(this.myUserId,chatFriendId).subscribe(
       (data) => {
         
         this.chatHistory = data.Data;

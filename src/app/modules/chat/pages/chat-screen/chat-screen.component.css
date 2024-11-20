@@ -2,16 +2,22 @@
     height: 100vh;
     background-color: rgb(230, 233, 236);
 }
+.section-wrapper{
+    display: flex;
+    height: 100%;
+    padding: 17px;
+    gap: 12px;
+}
 .section{
     background: white;
     border-radius: 13px;
 }
 
 .user-list-section{
-    width: 30%;
+    width: 24%;
 }
 .chat-section{
-    width: 69%;
+    width: 75%;
 }
 .user{
     background: #efefef;
@@ -38,7 +44,7 @@
     overflow: auto;
 }
 .chat-canvas{
-    height: 83vh;
+    height: 78vh;
     overflow: auto;
 }
 
@@ -64,5 +70,42 @@
 }
 .name-header{
     padding: 16px 23px;
-    background: #d3d3d3;
+  
+    border-radius: 11px 11px 0 0;
+    font-weight: 500;
+    box-shadow: 1px 1px 7px -5px;
+}
+.selected{
+    background: #c3c3c3;
+}
+.writting-section{
+    margin-top: 10px;
+    padding: 0 23px;
+    width: 100%;
+}
+.send-btn{
+    font-size: 24px;
+    text-decoration: none;
+    color: #0d6efd;
+}
+
+/* Media query for mobile screens */
+@media (max-width: 768px) {
+    .user-list-section{
+        width: 100%;
+    }
+    .chat-section{
+        width: 100%;
+    }
+    .section-wrapper{
+        gap: 0px;
+    }
+    .writting-section{
+        margin-top: 10px;
+        padding: 0 9px;
+        width: 100%;
+    }
+
+    
+    
 }
