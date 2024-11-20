@@ -35,22 +35,24 @@ export class ChatScreenComponent implements OnInit {
     if (window.innerWidth <= 768) {
       this.isMobileScreen = true;
       this.isChatScreen = false
-  } else {
-    this.isMobileScreen = false;
-  }
-    
+    } else {
+      this.isMobileScreen = false;
+    }
+    debugger
+
     this.getMyUserId()
-    
+
     this._service.getMessage().subscribe((msg) => {
       
+
       this.messages.push(msg);
-      
+
 
       var message = {
         Messages: msg.message,
         ReceiverId: this.myUserId,
         SenderId: this.receiverId,
-        User:msg.user
+        User: msg.user
       }
       this.chatHistory.push(message);
       this.scrollToBottom();
@@ -61,10 +63,10 @@ export class ChatScreenComponent implements OnInit {
       }
     )
 
-    
+
   }
 
-  
+
 
   getMyUserId() {
     const storedData = localStorage.getItem("chathub-credential");
@@ -86,7 +88,7 @@ export class ChatScreenComponent implements OnInit {
         this.userList = data.Data;
         this.userList = this.userList.filter(user => user.Id !== myUserId);
         this.chatFriend = this.userList[0];
-        
+
         this.getChatHistory(this.chatFriend.Id)
         console.log(this.userList);
       },
@@ -96,37 +98,38 @@ export class ChatScreenComponent implements OnInit {
     )
   }
 
-  
+
   sendMessage(): void {
 
-    this.getChatHistory(this.receiverId)
-    
-    
+    // this.getChatHistory(this.receiverId)
+
+
     if (this.receiverId && this.message) {
-      this._service.sendMessage(this.receiverId,this.message);
+      debugger
+      this._service.sendMessage(this.receiverId, this.message);
       this.message = ''; // Clear the input after sending
     }
   }
-  selectChatFriend(chatFriend){
+  selectChatFriend(chatFriend) {
 
     this.chatFriend = chatFriend;
     this.getChatHistory(chatFriend.Id)
     this.isChatScreen = true;
   }
 
-  goToList(){
+  goToList() {
     this.isChatScreen = false;
   }
 
 
   getChatHistory(chatFriendId) {
-    
-    
-    
+
+
+
     this.receiverId = chatFriendId;
-    this._service.getChatHistory(this.myUserId,chatFriendId).subscribe(
+    this._service.getChatHistory(this.myUserId, chatFriendId).subscribe(
       (data) => {
-        
+
         this.chatHistory = data.Data;
 
         console.log(this.chatHistory);
@@ -144,12 +147,12 @@ export class ChatScreenComponent implements OnInit {
   }
 
   scrollToBottom() {
-    
+
     try {
       setTimeout(() => {
         this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
       }, 1);
-          } catch (err) {
+    } catch (err) {
       console.error('Error scrolling to bottom:', err);
     }
   }

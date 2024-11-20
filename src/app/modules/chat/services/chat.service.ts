@@ -33,7 +33,9 @@ export class ChatService {
 
 
 
-    const credentials = localStorage.getItem("chathub-credential");
+    if (typeof localStorage !== 'undefined') {
+      const credentials = localStorage.getItem("chathub-credential");
+    
     const parsedCredentials = JSON.parse(credentials);
     var AccessToken = parsedCredentials.AccessToken;
 
@@ -60,6 +62,9 @@ export class ChatService {
     }
 
     this.addReceiveMessageListener();
+  } else {
+    console.error("localStorage is not available.");
+  }
 
   }
 
