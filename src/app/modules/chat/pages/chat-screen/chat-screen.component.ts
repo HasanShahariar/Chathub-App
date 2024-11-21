@@ -45,7 +45,7 @@ export class ChatScreenComponent implements OnInit {
     this._service.getMessage().subscribe((msg) => {
       
 
-      this.messages.push(msg);
+      // this.messages.push(msg);
 
 
       var message = {
@@ -101,7 +101,7 @@ export class ChatScreenComponent implements OnInit {
 
   sendMessage(): void {
 
-    // this.getChatHistory(this.receiverId)
+    this.getChatHistory(this.receiverId)
 
 
     if (this.receiverId && this.message) {
@@ -129,10 +129,8 @@ export class ChatScreenComponent implements OnInit {
     this.receiverId = chatFriendId;
     this._service.getChatHistory(this.myUserId, chatFriendId).subscribe(
       (data) => {
-
         this.chatHistory = data.Data;
-
-        console.log(this.chatHistory);
+        this.scrollToBottom();
       },
       (err) => {
         console.log(err);

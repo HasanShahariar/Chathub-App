@@ -1,1 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+
+:root {
+    --primary-theme-color: #5d67ff;
+    --primary-text-color: #000000;
+    --secondary-text-color: #f1a803;
+    --background-color: #fdfdfd;
+  }
+  
+  [data-theme="dark"] {
+    --primary-theme-color: #7780ff;
+    --primary-text-color: #ffffff;
+    --secondary-text-color: #f1a803;
+    --background-color: #030713;
+  }
+  [data-theme="red"] {
+    --primary-theme-color: #FF204E;
+    --primary-text-color: #000000;
+    --secondary-text-color: #00cc0a;
+    --background-color: #ffffff;
+  }
+  [data-theme="orange"] {
+    --primary-theme-color: #F0A500;
+    --primary-text-color: #000000;
+    --secondary-text-color: #a23bdd;
+    --background-color: #ffffff;
+  }
+
+
+*::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background-color: rgb(196, 196, 196);
+    border-radius: 25px;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background: var(--primary-theme-color) !important;
+    border-radius: 25px;
+  }
