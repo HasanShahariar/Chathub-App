@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,15 +12,20 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
+  returnUrl: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private authService:AuthService,
     private alert: ToastrService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    
     ) { }
 
   ngOnInit() {
+    this.returnUrl = 'chat'
+    
     var data = localStorage.getItem("chathub-credential")
     if(data){
       this.router.navigate(["chat"])
@@ -44,12 +49,13 @@ export class LoginComponent implements OnInit {
     this.authService.authenticate(userInfo).subscribe(
       (data)=>{
         
+        
         console.log(data);
         
         if(data){
+          this.router.navigate([this.returnUrl]);
           this.alert.success('Login successful');
-          localStorage.setItem("chathub-credential",JSON.stringify(data))
-          this.router.navigate(['chat']);
+        
         }
         else{
           this.alert.error('Login Failed');
@@ -57,7 +63,7 @@ export class LoginComponent implements OnInit {
         
       },
       (err)=>{
-        
+        debugger
         console.log(err);
         this.alert.error('Login Failed');
       }

@@ -5,24 +5,19 @@
 .section-wrapper{
     display: flex;
     height: 100%;
-    padding: 17px;
-    gap: 12px;
-}
-.section{
-    background: white;
-    border-radius: 13px;
 }
 
 .user-list-section{
+    background: #efefef;
     width: 24%;
 }
 .chat-section{
-    width: 75%;
+    width: 100%;
+    background: white;
 }
 .user{
     background: #efefef;
     padding: 12px 18px;
-    border-radius: 8px;
     display: flex;
     gap: 15px;
     align-items: center;
@@ -30,21 +25,21 @@
     cursor: pointer;
 }
 .user p{
-    font-weight: 500;
+    font-weight: 400;
     margin: 0;
 }
 .user img{
-    width: 45px;
-    height: 45px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
 }
 .user-list-section > div{
     height: 100%;
-    padding: 15px;
+    padding: 15px 0;
     overflow: auto;
 }
 .chat-canvas{
-    height: 78vh;
+    height: 83vh;
     overflow: auto;
 }
 
@@ -76,7 +71,10 @@
     box-shadow: 1px 1px 7px -5px;
 }
 .selected{
-    background: #c3c3c3;
+    background: var(--primary-theme-color);
+}
+.selected p{
+    color: white;
 }
 .writting-section{
     margin-top: 10px;
@@ -86,8 +84,76 @@
 .send-btn{
     font-size: 24px;
     text-decoration: none;
-    color: #0d6efd;
+    color: var(--primary-theme-color);
+    display: flex;
+    align-items: center;
 }
+.send-btn i{
+    font-size: 29px;
+}
+.writting-section input{
+    border-radius: 23px;
+}
+.nav-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 27px 12px;
+}
+.nav-item-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.nav-item-container a{ 
+    cursor: pointer;
+}
+.nav-item-container i{ 
+    font-size: 27px;
+    color: var(--primary-theme-color);
+}
+.nav-profile img{
+    width: 39px;
+    border-radius: 50%;
+}
+.nav-profile {
+    position: relative;
+}
+.nav-profile a{
+    cursor: pointer;
+}
+
+.profile-card {
+    position: absolute;
+    top: -101px;
+    right: -108px;
+    width: max-content;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+ 
+    width: 9rem;
+}
+.profile-item{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    transition: all .3s ease-in-out;
+}
+.profile-item a,i{
+    text-decoration: none;
+    color: rgb(70, 70, 70);
+}
+
+.profile-item:hover{
+    background-color: #e9e9e9;
+}
+  
 
 /* Media query for mobile screens */
 @media (max-width: 768px) {
@@ -109,3 +175,5 @@
     
     
 }
+
+
