@@ -47,14 +47,9 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(){
     
- 
-  
     this.authService.register(this.registerForm.value).subscribe(
       (data)=>{
-        
-        
         console.log(data);
-        
         if(data){
           this.onChangeMode.emit(true)
           this.alert.success('Register successful');
@@ -65,8 +60,7 @@ export class RegisterComponent implements OnInit {
         }
         
       },
-      (err)=>{
-        
+      (err)=>{    
         console.log(err);
         this.alert.error('Register Failed');
       }

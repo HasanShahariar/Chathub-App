@@ -4,6 +4,7 @@ import { ChatRoutingModule } from './chat-routing.module';
 import { ChatScreenComponent } from './components/chat-screen/chat-screen.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ProfileModule } from '../profile/profile.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     ChatRoutingModule,
-    FormsModule  
+    FormsModule ,
+    ProfileModule
   ],
   exports:[
     ChatScreenComponent
