@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { NavComponent } from './nav/nav/nav.component';
 
 
 @NgModule({
@@ -12,7 +13,12 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
       preventDuplicates: true
     })
   ],
-  declarations: [],
+  declarations: [
+    NavComponent
+  ],
+  exports:[
+    NavComponent
+  ],
   providers: [
     ToastrService,
     

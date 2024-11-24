@@ -45,7 +45,7 @@ export class AuthService {
   }
 
   private setAuthFromLocalStorage(auth: any): boolean {
-    debugger
+    
     // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
     if (auth && auth.AccessToken) {
       localStorage.setItem(this.authLocalStorageToken, JSON.stringify(auth));

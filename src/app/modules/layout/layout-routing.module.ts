@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ChatScreenComponent } from './components/chat-screen/chat-screen.component';
+import { MainLayoutComponent } from './main-layout/main-layout.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: ChatScreenComponent,
-  },
+    path:'',
+    component: MainLayoutComponent
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ChatRoutingModule { }
+export class LayoutRoutingModule { }

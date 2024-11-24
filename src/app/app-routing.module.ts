@@ -7,7 +7,7 @@ const routes: Routes = [
     path: 'chat',
     canActivate: [AuthGuard],
     loadChildren: () =>
-      import('../app/modules/chat/chat.module').then((m) => m.ChatModule),
+      import('../app/modules/layout/layout.module').then((m) => m.LayoutModule),
   },
   {
     path: '',

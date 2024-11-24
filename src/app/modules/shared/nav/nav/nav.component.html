@@ -1,0 +1,31 @@
+<nav class="h-100">
+  <div class="nav-wrapper">
+    <div class="nav-item-container">
+      <a><i class="fa-solid fa-message"></i></a>
+    </div>
+    <div class="nav-profile-preferace">
+      <div class="nav-profile">
+        <a (click)="toggleProfiles($event)">
+          <img src="assets/media/300-1.jpg" alt="">
+        </a>
+        <div *ngIf="showProfiles" class="profile-card" @slideDownUp>
+          <div class="d-flex flex-wrap">
+            
+            <div class="profile-item">
+              <a>Profile</a>
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div (click)="logOut()" class="profile-item">
+              <a >logout</a>
+              <i class="fa-solid fa-right-from-bracket align-content-around"></i>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+  </div>
+</nav>
