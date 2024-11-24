@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
@@ -7,12 +7,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   returnUrl: any;
+  @Output() onChangeMode = new EventEmitter<boolean>();
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,14 +41,15 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  goToRegister(){
+    this.onChangeMode.emit(false)
+  }
+
   onSubmit(){
     
  
-    var userInfo = {
-      Username: this.loginForm.value.userName,
-      Password: this.loginForm.value.password,
-    }
-    this.authService.authenticate(userInfo).subscribe(
+    
+    this.authService.authenticate(this.loginForm.value).subscribe(
       (data)=>{
         
         

@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -27,7 +28,9 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 export class NavComponent implements OnInit {
   showProfiles: boolean = false;
 
-  constructor() { }
+  constructor(
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
   }
@@ -41,5 +44,9 @@ export class NavComponent implements OnInit {
   handleClickOutside(event: Event): void {
       this.showProfiles = false;
   }
+
+  logOut(){
+    this.authService.logout()
+   }
 
 }
