@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileViewComponent } from './components/profile-view/profile-view.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -9,10 +10,12 @@ import { ProfileViewComponent } from './components/profile-view/profile-view.com
     ProfileViewComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
   exports: [
     ProfileViewComponent
+
   ]
 })
 export class ProfileModule { }

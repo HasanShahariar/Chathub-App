@@ -18,8 +18,11 @@
     color: var(--primary-theme-color);
 }
 .nav-profile img{
-    width: 39px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
 }
 .nav-profile {
     position: relative;

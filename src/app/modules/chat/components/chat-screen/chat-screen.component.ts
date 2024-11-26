@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
-import { NgIf, NgForOf } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ChatService } from '../../services/chat.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
+import { SharedService } from '../../../shared/services/shared.service';
+import { environment } from '../../../../environment';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-chat-screen',
@@ -40,50 +41,103 @@ export class ChatScreenComponent implements OnInit {
   userList: any;
   receiverId: any;
   chatHistory: any;
-  myUserId: void;
+  myUserId: any;
 
   @ViewChild('chatContainer') chatContainer!: ElementRef;
   chatFriend: any;
   isChatScreen: boolean = null;
   isMobileScreen: boolean;
   showProfiles: boolean = false;
+  isShowProfile: boolean;
+  imgUrl = environment.imgUrl
+  defaultImgUrl = '../../../../../assets/media/300-1.jpg';
+  searchKey: any = null;
+  activeUsers: any[] = [];
+  activeUsersCount: number;
+  sanitizedContent: SafeHtml;
+
+
+  editorOptions = {
+    toolbar: [
+      ['bold', 'italic', 'underline'],        // Basic styling
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }], // Lists
+      [{ 'header': [1, 2, 3, false] }],      // Headers
+      ['link', 'image']                      // Links and images
+    ]
+  };
 
   constructor(
     private _service: ChatService,
     private authService: AuthService,
-    private router: Router
+    private sharedService: SharedService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
+    this._service.startConnection();
     if (window.innerWidth <= 768) {
       this.isMobileScreen = true;
       this.isChatScreen = false
     } else {
       this.isMobileScreen = false;
     }
-    
+
+    this.sharedService.showProfileSubject$.subscribe((value) => {
+      this.isShowProfile = value; // Update whenever Subject emits a new value
+    });
+
+
 
     this.getMyUserId()
 
-    this._service.getMessage().subscribe((msg) => {
+    this.receiveMessage()
+    this._service.getActiveUsers()
+    
+    
+    this._service.activeUsers$.subscribe(users => {
+      
+      this.activeUsers = users;
+      
+      this.activeUsers = this.activeUsers.filter(user => user !== this.myUserId.toString());
+      this.activeUsersCount = this.activeUsers.length;
+    });
+    
+    this._service.getActiveUsers()
+  }
+  getActiveStatus(userId){
+    
+    if(this.activeUsers.includes(userId.toString())){
+      return true;
+    }
+    else{
+      return false
+    }
+  }
 
-      var message = {
-        Messages: msg.message,
-        ReceiverId: this.myUserId,
-        SenderId: this.receiverId,
-        User: msg.user
+
+
+  receiveMessage() {
+    this._service.getMessage().subscribe((msg) => {
+      if (this.chatFriend.Id == Number(msg.user)) {
+        var message = {
+          Messages: msg.message,
+          ReceiverId: this.myUserId,
+          SenderId: this.receiverId,
+          User: msg.user
+        }
+        this.chatHistory.push(message);
+        this.scrollToBottom();
       }
-      this.chatHistory.push(message);
-      this.scrollToBottom();
+
     });
     this._service.connectionStatusSubject.subscribe(
       (data) => {
         this.isConnected = data;
       }
     )
-
-
   }
+
+
   toggleProfiles(event: Event) {
     event.stopPropagation();
     this.showProfiles = !this.showProfiles;
@@ -91,7 +145,7 @@ export class ChatScreenComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: Event): void {
-      this.showProfiles = false;
+    this.showProfiles = false;
   }
 
 
@@ -100,6 +154,7 @@ export class ChatScreenComponent implements OnInit {
     const storedData = localStorage.getItem("chathub-credential");
 
     if (storedData) {
+
       const parsedData = JSON.parse(storedData);
       this.myUserId = parsedData.UserId;
       this.getAllUsers(this.myUserId)
@@ -109,13 +164,31 @@ export class ChatScreenComponent implements OnInit {
     }
   }
 
+  getFilteredUsers(event) {
 
-  getAllUsers(myUserId) {
-    this._service.getAllUsers().subscribe(
+    this.searchKey = event.target.value;
+    this.getAllUsers();
+  }
+
+
+  getAllUsers(myUserId?) {
+
+    this._service.getAllUsers(this.searchKey).subscribe(
       (data) => {
-        this.userList = data.Data;
+
+        this.userList = data.body.Data;
         this.userList = this.userList.filter(user => user.Id !== myUserId);
-        this.chatFriend = this.userList[0];
+
+        var chatFriend = sessionStorage.getItem('chatFriend');
+
+        if (chatFriend) {
+          this.chatFriend = JSON.parse(chatFriend);
+
+        }
+        else {
+
+          this.chatFriend = this.userList[0];
+        }
 
         this.getChatHistory(this.chatFriend.Id)
         console.log(this.userList);
@@ -126,19 +199,31 @@ export class ChatScreenComponent implements OnInit {
     )
   }
 
+  onContentChange(content: any) {
+    return this.sanitizedContent = this.sanitizer.bypassSecurityTrustHtml(content);
+  }
+
+
+
 
   sendMessage(): void {
+    debugger
+
 
     this.getChatHistory(this.receiverId)
 
 
     if (this.receiverId && this.message) {
-      
+
       this._service.sendMessage(this.receiverId, this.message);
       this.message = ''; // Clear the input after sending
     }
   }
   selectChatFriend(chatFriend) {
+    
+
+    sessionStorage.setItem('chatFriend', JSON.stringify(chatFriend));
+
 
     this.chatFriend = chatFriend;
     this.getChatHistory(chatFriend.Id)
@@ -151,6 +236,7 @@ export class ChatScreenComponent implements OnInit {
 
 
   getChatHistory(chatFriendId) {
+
 
 
 
@@ -182,8 +268,8 @@ export class ChatScreenComponent implements OnInit {
       console.error('Error scrolling to bottom:', err);
     }
   }
-  logOut(){
-   this.authService.logout()
+  logOut() {
+    this.authService.logout()
   }
 
 }

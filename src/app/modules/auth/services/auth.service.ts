@@ -26,27 +26,22 @@ export class AuthService {
   }
 
   public register(user): Observable<any> {
-    return this.http.post<any>(environment.apiUrl+"api/Auth/Register",user);
+    return this.http.post<any>(environment.apiUrl + "api/Auth/Register", user);
   }
+  
   public authenticate(userInfo): Observable<any> {
-    
-    return this.http.post<any>(environment.apiUrl+"api/Auth/Authenticate",userInfo).pipe(
-        
+    return this.http.post<any>(environment.apiUrl + "api/Auth/Authenticate", userInfo).pipe(
+
       map((auth: any) => {
-        
-        
         this.currentUserSubject.next(auth);
         const result = this.setAuthFromLocalStorage(auth);
         return auth;
       })
-      
-     
     );
   }
 
   private setAuthFromLocalStorage(auth: any): boolean {
-    
-    // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
+
     if (auth && auth.AccessToken) {
       localStorage.setItem(this.authLocalStorageToken, JSON.stringify(auth));
       return true;
@@ -54,33 +49,22 @@ export class AuthService {
     return false;
   }
 
-
-
-
-
   public getAllUsers(): Observable<any> {
-    return this.http.get<any>(environment.apiUrl+"api/Users/GetAll");
+    return this.http.get<any>(environment.apiUrl + "api/Users/GetAll");
   }
 
   loggedIn() {
-    
     const user = localStorage.getItem(this.authLocalStorageToken);
     return !this.jwtHelper.isTokenExpired(JSON.parse(user)?.AccessToken);
   }
-
 
   public getSession(): boolean {
     return this.loggedIn();
   }
 
   logout() {
-    
-
     localStorage.removeItem("chathub-credential");
     this.router.navigate([""])
-
   }
-
-  
 
 }

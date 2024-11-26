@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
 
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
     private authService:AuthService,
     private alert: ToastrService,
     private router: Router,
-    private route: ActivatedRoute,
+    private messageService: MessageService
     
     ) { }
 
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit {
     }
     this.createForm();
   }
+
   createForm() {
     this.loginForm = this.formBuilder.group({
       userName: ['', Validators.required],
@@ -47,6 +49,11 @@ export class LoginComponent implements OnInit {
 
   onSubmit(){
     
+    if(this.loginForm.invalid){
+      
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'Provide valid information'});
+      return;
+    }
  
     
     this.authService.authenticate(this.loginForm.value).subscribe(
@@ -57,18 +64,20 @@ export class LoginComponent implements OnInit {
         
         if(data){
           this.router.navigate([this.returnUrl]);
-          this.alert.success('Login successful');
+          this.messageService.add({severity: 'success', summary: 'Success', detail: 'Successfully logged in'});
+
         
         }
         else{
-          this.alert.error('Login Failed');
+          this.messageService.add({severity: 'error', summary: 'Error', detail: 'Login Failed'});
+
         }
         
       },
       (err)=>{
         
         console.log(err);
-        this.alert.error('Login Failed');
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'Login Failed'});
       }
     )
 

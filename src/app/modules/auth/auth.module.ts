@@ -6,6 +6,7 @@ import { AuthenticationComponent } from './pages/authentication/authentication.c
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     AuthRoutingModule,
     ReactiveFormsModule 
-  ]
+  ],
+  providers:[MessageService]
 })
 export class AuthModule { }

@@ -1,3 +1,57 @@
-<p>
-  profile-view works!
-</p>
+<!-- <div class="profile-card">
+  <div class="profile-header">
+    <img src="../../../../../assets/media/login-bg.png" alt="Background" class="profile-bg">
+    <div class="profile-picture">
+      <img src="../../../../../assets/media/300-1.jpg" alt="Profile Picture">
+    </div>
+  </div>
+  <div class="profile-content">
+    <h2 class="profile-name">{{user.FullName}}</h2>
+    <p class="profile-title">Front end Developer</p>
+    <p class="profile-description">
+      If several languages coalesce, the grammar of the resulting language is more simple.
+    </p>
+    <ul class="profile-details">
+      <li><i class="pi pi-user"></i> Adam Zampa</li>
+      <li><i class="pi pi-envelope"></i> adminthemesbrand.com</li>
+      <li><i class="pi pi-map-marker"></i> California, USA</li>
+    </ul>
+  </div>
+</div> -->
+
+
+
+
+<div class="profile-card">
+  <div class="profile-header">
+    <img src="../../../../../assets/media/login-bg.png" alt="Background" class="profile-bg">
+    
+    <div class="profile-picture-container">
+      <!-- Profile Image -->
+      <img [src]="profileImage" alt="Profile Picture" class="profile-picture" />
+      
+      <!-- Edit Icon (will show on hover) -->
+      <label for="file-input" class="edit-icon">
+        <i class="fa-solid fa-pencil"></i>
+      </label>
+      <!-- Hidden file input for uploading image -->
+      <input id="file-input" type="file" (change)="onImageUpload($event)" hidden />
+    </div>
+  </div>
+
+  <div class="profile-content">
+    <h2 class="profile-name position-relative">{{user.FullName}} <span class="edit-pencil"><i class="fa-solid fa-pencil"></i></span></h2>
+    <p class="profile-title">Front end Developer</p>
+    <p class="profile-description position-relative">
+      <span class="edit-pencil "><i class="fa-solid fa-pencil"></i></span>
+      If several languages coalesce, the grammar of the resulting language is more simple.
+    </p>
+    <ul class="profile-details position-relative">
+      <span class="edit-pencil "><i class="fa-solid fa-pencil"></i></span>
+      <li><i class="pi pi-user"></i> Adam Zampa</li>
+      <li><i class="pi pi-envelope"></i> adminthemesbrand.com</li>
+      <li><i class="pi pi-map-marker"></i> California, USA</li>
+    </ul>
+  </div>
+</div>
+

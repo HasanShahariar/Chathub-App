@@ -9,6 +9,7 @@ export class AuthGuard {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     
     
+    
     const currentUser = this.authService.currentUserValue;
     
     if (this.checkPermission()) {

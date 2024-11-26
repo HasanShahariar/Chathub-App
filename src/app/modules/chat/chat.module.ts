@@ -5,6 +5,9 @@ import { ChatScreenComponent } from './components/chat-screen/chat-screen.compon
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileModule } from '../profile/profile.module';
+import { ToastModule } from 'primeng/toast';
+import { SharedModule } from '../shared/shared.module';
+import { QuillModule } from 'ngx-quill';
 
 
 @NgModule({
@@ -14,8 +17,10 @@ import { ProfileModule } from '../profile/profile.module';
   imports: [
     CommonModule,
     ChatRoutingModule,
-    FormsModule ,
-    ProfileModule
+    ToastModule,
+    ProfileModule,
+    SharedModule,
+    QuillModule.forRoot()
   ],
   exports:[
     ChatScreenComponent

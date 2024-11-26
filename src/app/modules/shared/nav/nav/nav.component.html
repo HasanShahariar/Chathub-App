@@ -1,17 +1,17 @@
 <nav class="h-100">
   <div class="nav-wrapper">
     <div class="nav-item-container">
-      <a><i class="fa-solid fa-message"></i></a>
+      <a (click)="toogleChatlistAndProfile(false)"><i class="fa-regular fa-message"></i></a>
     </div>
     <div class="nav-profile-preferace">
       <div class="nav-profile">
         <a (click)="toggleProfiles($event)">
-          <img src="assets/media/300-1.jpg" alt="">
+          <img [src]="profileImage" alt="">
         </a>
         <div *ngIf="showProfiles" class="profile-card" @slideDownUp>
           <div class="d-flex flex-wrap">
             
-            <div class="profile-item">
+            <div (click)="toogleChatlistAndProfile(true)" class="profile-item">
               <a>Profile</a>
               <i class="fa-solid fa-user"></i>
             </div>
@@ -29,3 +29,4 @@
 
   </div>
 </nav>
+

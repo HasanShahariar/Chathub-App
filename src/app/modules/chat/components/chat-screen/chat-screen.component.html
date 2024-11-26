@@ -1,14 +1,26 @@
 <div class="wrapper">
   <div class="section-wrapper">
-    <div>
+    <div *ngIf="isShowProfile">
       <app-profile-view></app-profile-view>
     </div>
-    <aside class="user-list-section "
+    <aside class="side-bar" *ngIf="!isShowProfile"
       [ngClass]="{'d-none':isMobileScreen && isChatScreen==true,'d-block':isMobileScreen && isChatScreen==false }">
-      <div class="">
+
+      <div class="search-bar">
+        <input type="text" placeholder="Search ..." (keyup)="getFilteredUsers($event)">
+        <span>
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </span>
+      </div>
+      <span class="side-bar-section-header">Direct Message (<span>{{activeUsersCount}}</span>)</span>
+      <div class="user-list-section">
         <div *ngFor="let user of userList" class="user" (click)="selectChatFriend(user)"
           [ngClass]="{'selected':user.Id==this.chatFriend.Id}">
-          <img src="assets/media/300-1.jpg" alt="">
+          <div class="position-relative">
+            <img *ngIf="user.ProfileImageUrl" [src]="imgUrl+user.ProfileImageUrl" alt="">
+            <img *ngIf="!user.ProfileImageUrl" [src]="defaultImgUrl" alt="">
+            <span *ngIf="getActiveStatus(user.Id)" class="active-status"></span>
+          </div>
           <p>{{user.FullName}}</p>
 
         </div>
@@ -16,8 +28,13 @@
     </aside>
     <div class="chat-section "
       [ngClass]="{'d-none':isMobileScreen && isChatScreen==false, 'd-block':isMobileScreen && isChatScreen==false}">
-      <div class="name-header"> <a *ngIf="isMobileScreen" class="btn-goto" (click)="goToList()"><i
-            class="fa-solid fa-arrow-left"></i></a> {{chatFriend.FullName}}</div>
+      <div class="name-header">
+        <img *ngIf="chatFriend?.ProfileImageUrl" [src]="imgUrl+chatFriend.ProfileImageUrl" alt="">
+        <img *ngIf="!chatFriend?.ProfileImageUrl" [src]="defaultImgUrl" alt="">
+        <a *ngIf="isMobileScreen" class="btn-goto" (click)="goToList()"><i class="fa-solid fa-arrow-left"></i>
+
+        </a> {{chatFriend?.FullName}}
+      </div>
       <div class="chat-canvas" #chatContainer>
 
         <div *ngFor="let item of chatHistory" [ngClass]="{
@@ -30,7 +47,10 @@
             'sender-message': item.ReceiverId === receiverId,
             
         }">
-            <span>{{item.Messages}}</span>
+            <!-- <span>{{item.Messages}}</span> -->
+            <span [innerHTML]="item.Messages"> </span>
+            <!-- <span >{{onContentChange(item.Messages)}} </span> -->
+            
 
           </div>
         </div>
@@ -54,8 +74,26 @@
 
 
         <div class="d-flex justify-content-center gap-3" *ngIf="chatHistory">
-          <input class="form-control" type="text" [(ngModel)]="message" placeholder="Enter a message"
-            (keydown.enter)="sendMessage()" />
+          <!-- <input class="form-control text-field" type="text" [(ngModel)]="message" placeholder="Enter a message"
+            (keydown.enter)="sendMessage()" /> -->
+
+
+
+
+
+
+            <div class="editor-wrapper">
+              <quill-editor [(ngModel)]="message" [styles]="{ height: '100px', width: '100%' }" (ngModelChange)="onContentChange($event)"></quill-editor>
+            </div>
+            
+            <!-- <div class="output">
+              <h3>Preview:</h3>
+              <div [innerHTML]="message"></div>
+            </div> -->
+
+
+
+
           <a (click)="sendMessage()" class="send-btn"><i class="material-icons">send</i></a>
         </div>
 
