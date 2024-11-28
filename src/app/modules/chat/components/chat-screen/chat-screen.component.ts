@@ -6,8 +6,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { SharedService } from '../../../shared/services/shared.service';
 import { environment } from '../../../../environment';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { QuillImageResize } from 'quill-image-resize-module';  // Import Image Resize Module
-import Quill from 'quill';
+
 
 
 
@@ -76,9 +75,7 @@ export class ChatScreenComponent implements OnInit {
         [{ 'indent': '-1'}, { 'indent': '+1' }],        
 
       ],
-      imageResize: {
-        displaySize: true, // Optional: display resize handles on images
-      },
+     
       emoji: true
     },
     placeholder: 'Compose an epic...',
@@ -94,9 +91,9 @@ export class ChatScreenComponent implements OnInit {
 
   ngOnInit(): void {
     // Quill.register('modules/imageResize', QuillImageResize);
-    this.initImageResize();
 
-    this._service.startConnection();
+
+    // this._service.startConnection();
     if (window.innerWidth <= 768) {
       this.isMobileScreen = true;
       this.isChatScreen = false
@@ -130,35 +127,7 @@ export class ChatScreenComponent implements OnInit {
 
 
 
-  initImageResize(): void {
-    // Listen for image drop event and resize images to 500x500px
-    const editor = document.querySelector('.quill-editor .ql-editor');
-
-    if (editor) {
-      editor.addEventListener('drop', (e: any) => {
-        const files = e.dataTransfer.files;
-        const image = files[0];
-
-        if (image && image.type.includes('image')) {
-          const reader = new FileReader();
-          reader.onload = () => {
-            const img = new Image();
-            img.src = reader.result as string;
-            img.onload = () => {
-              const quill = this.editorOptions as any;  // Access the Quill editor
-              const range = quill.getSelection();
-              const imageUrl = img.src;
-
-              // Insert image with fixed size 500x500px
-              const imageHtml = `<img src="${imageUrl}" width="500" height="500">`;
-              quill.clipboard.dangerouslyPasteHTML(range.index, imageHtml);
-            };
-          };
-          reader.readAsDataURL(image);
-        }
-      });
-    }
-  }
+  
 
 
 
