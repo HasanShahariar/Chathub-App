@@ -89,7 +89,7 @@ export class ChatScreenComponent implements OnInit {
     private _service: ChatService,
     private authService: AuthService,
     private sharedService: SharedService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer  
   ) { }
 
   ngOnInit(): void {
