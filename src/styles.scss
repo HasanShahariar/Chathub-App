@@ -1,4 +1,6 @@
 
+
+
 :root {
     --primary-theme-color: #5d67ff;
     --primary-text-color: #000000;
@@ -42,4 +44,8 @@
   *::-webkit-scrollbar-thumb {
     background: var(--primary-theme-color) !important;
     border-radius: 25px;
+  }
+
+  .message p{
+    margin-bottom: 0 !important;
   }

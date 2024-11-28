@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
     this.authService.authenticate(this.loginForm.value).subscribe(
       (data)=>{
         
-        
+        debugger
         console.log(data);
         
         if(data){

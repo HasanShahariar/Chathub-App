@@ -2,11 +2,16 @@ import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular
 import { Subscription } from 'rxjs';
 import { ChatService } from '../../services/chat.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { Router } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
 import { SharedService } from '../../../shared/services/shared.service';
 import { environment } from '../../../../environment';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { QuillImageResize } from 'quill-image-resize-module';  // Import Image Resize Module
+import Quill from 'quill';
+
+
+
+
 
 @Component({
   selector: 'app-chat-screen',
@@ -33,6 +38,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class ChatScreenComponent implements OnInit {
 
+
   public user: any = 2;
   public message: string = '';
   public messages: any = [];
@@ -57,13 +63,26 @@ export class ChatScreenComponent implements OnInit {
   sanitizedContent: SafeHtml;
 
 
+
+
   editorOptions = {
-    toolbar: [
-      ['bold', 'italic', 'underline'],        // Basic styling
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }], // Lists
-      [{ 'header': [1, 2, 3, false] }],      // Headers
-      ['link', 'image']                      // Links and images
-    ]
+    modules: {
+      toolbar: [
+        // [{ 'header': [1, 2, false] }],  
+        // ['image', 'code-block']    
+               
+        ['bold', 'italic', 'underline'],  
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'indent': '-1'}, { 'indent': '+1' }],        
+
+      ],
+      imageResize: {
+        displaySize: true, // Optional: display resize handles on images
+      },
+      emoji: true
+    },
+    placeholder: 'Compose an epic...',
+    theme: 'snow'
   };
 
   constructor(
@@ -74,6 +93,9 @@ export class ChatScreenComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // Quill.register('modules/imageResize', QuillImageResize);
+    this.initImageResize();
+
     this._service.startConnection();
     if (window.innerWidth <= 768) {
       this.isMobileScreen = true;
@@ -104,6 +126,49 @@ export class ChatScreenComponent implements OnInit {
     
     this._service.getActiveUsers()
   }
+
+
+
+
+  initImageResize(): void {
+    // Listen for image drop event and resize images to 500x500px
+    const editor = document.querySelector('.quill-editor .ql-editor');
+
+    if (editor) {
+      editor.addEventListener('drop', (e: any) => {
+        const files = e.dataTransfer.files;
+        const image = files[0];
+
+        if (image && image.type.includes('image')) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const img = new Image();
+            img.src = reader.result as string;
+            img.onload = () => {
+              const quill = this.editorOptions as any;  // Access the Quill editor
+              const range = quill.getSelection();
+              const imageUrl = img.src;
+
+              // Insert image with fixed size 500x500px
+              const imageHtml = `<img src="${imageUrl}" width="500" height="500">`;
+              quill.clipboard.dangerouslyPasteHTML(range.index, imageHtml);
+            };
+          };
+          reader.readAsDataURL(image);
+        }
+      });
+    }
+  }
+
+
+
+  getSanitizedHtml(html: string): SafeHtml {
+    debugger
+    var  gfgfg = this.sanitizer.bypassSecurityTrustHtml(html);
+    return gfgfg
+  }
+
+
   getActiveStatus(userId){
     
     if(this.activeUsers.includes(userId.toString())){
@@ -207,24 +272,20 @@ export class ChatScreenComponent implements OnInit {
 
 
   sendMessage(): void {
-    debugger
-
-
+    
+    if(this.message.trim() === ''){
+      return
+    }
     this.getChatHistory(this.receiverId)
-
-
     if (this.receiverId && this.message) {
-
       this._service.sendMessage(this.receiverId, this.message);
       this.message = ''; // Clear the input after sending
     }
   }
+
+
   selectChatFriend(chatFriend) {
-    
-
     sessionStorage.setItem('chatFriend', JSON.stringify(chatFriend));
-
-
     this.chatFriend = chatFriend;
     this.getChatHistory(chatFriend.Id)
     this.isChatScreen = true;
@@ -236,10 +297,6 @@ export class ChatScreenComponent implements OnInit {
 
 
   getChatHistory(chatFriendId) {
-
-
-
-
     this.receiverId = chatFriendId;
     this._service.getChatHistory(this.myUserId, chatFriendId).subscribe(
       (data) => {
@@ -259,7 +316,6 @@ export class ChatScreenComponent implements OnInit {
   }
 
   scrollToBottom() {
-
     try {
       setTimeout(() => {
         this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;

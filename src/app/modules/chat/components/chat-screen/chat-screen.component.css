@@ -44,6 +44,9 @@
 .chat-section{
     width: 100%;
     background: #efefef;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .user{
     padding: 6px 18px;
@@ -66,14 +69,14 @@
 }
 
 .chat-canvas{
-    height: 65vh;
+    /* height: 65vh; */
     overflow: auto;
 }
 
 .receiver-message{
   
     background-color: #dadadd;
-    margin: 10px;
+    margin: 1px 10px;
     padding: 6px 13px;
     border-radius: 20px;
     color: rgb(29, 29, 29);
@@ -83,7 +86,7 @@
 .sender-message{
 
     background-color: var(--primary-theme-color) !important;;
-    margin: 10px;
+    margin: 1px 10px;
     padding: 6px 13px;
     border-radius: 20px;
     color: white;
@@ -110,17 +113,19 @@
     color: white;
 }
 .writting-section{
-    margin-top: 10px;
-    padding: 0 23px;
+    margin: 0px 0px 0px;
+    padding: 0 7px;
     width: 100%;
 }
 .send-btn{
-    font-size: 24px;
+    font-size: 21px;
     text-decoration: none;
-   
     display: flex;
     align-items: center;
     cursor: pointer;
+    position: absolute;
+    bottom: 16px;
+    right: 21px;
 }
 .send-btn i{
 
@@ -128,7 +133,7 @@
 
 }
 .send-btn i{
-    font-size: 29px;
+    font-size: 23px;
 }
 .writting-section input{
     border-radius: 23px;
@@ -231,6 +236,119 @@
     width: 100%;
     overflow: hidden;
   }
+  .toolbar-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+  
+  .send-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .send-button:hover {
+    background-color: #0056b3;
+  }
+  .quill-editor{
+    width: 100%;
+    /* background: white; */
+  }
+
+::ng-deep .ql-container {
+  border-radius: 0 0 9px 9px;  
+  border: 2px solid #ccc;  
+  background-color: white;  
+}
+
+::ng-deep .ql-editor {
+  border-radius: 12px; 
+  background-color: white;  
+}
+
+::ng-deep .ql-toolbar.ql-snow{
+    border-radius: 9px 9px 0 0;
+    background: #2b2b2b;
+}
+
+::ng-deep .ql-snow .ql-stroke{
+    stroke: white;
+}
+::ng-deep .ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill{
+    fill: white;
+}
+::ng-deep .ql-snow .ql-picker{
+    color: white;
+}
+
+::ng-deep .ql-snow .ql-picker{
+    color: rgb(255, 255, 255);
+}
+::ng-ddep .ql-snow .ql-picker-options .ql-picker-item{
+    color: rgb(255, 255, 255);
+}
+  
+::ng-deep .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options{
+    background: #2b2b2b;
+}
+::ng-deep .ql-snow.ql-toolbar .ql-picker-item.ql-selected{
+    color: #c5c5c5;
+}
+::ng-deep .ql-snow.ql-toolbar .ql-picker-item:hover{
+    color: #c5c5c5;
+}
+::ng-deep .ql-snow.ql-toolbar .ql-picker-label:hover{
+    color:white;
+}
+::ng-deep .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke{
+    color:white;
+    stroke: white;
+}
+::ng-deep .ql-snow.ql-toolbar .ql-picker-item:active{
+    color: #c5c5c5;
+}
+::ng-deep .ql-snow.ql-toolbar .ql-picker-label:active{
+    color:white;
+}
+::ng-deep .ql-snow.ql-toolbar .ql-picker-label:active .ql-stroke{
+    color:white;
+    stroke: white;
+}
+::ng-deep .ql-snow.ql-toolbar button:hover .ql-stroke{
+    stroke: white;
+}
+
+::ng-deep .ql-snow.ql-toolbar button:hover{
+    color: white;
+}
+::ng-deep .ql-snow.ql-toolbar button:hover .ql-fill{ 
+    fill: white;
+}
+
+::ng-deep .ql-snow.ql-toolbar .ql-picker-label:hover .ql-fill{
+    fill: white;
+}
+::ng-deep .ql-snow.ql-toolbar .ql-picker-label.ql-active{
+    color: white;
+}
+::ng-deep .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke{
+    stroke: white;
+}
+::ng-deep .ql-snow.ql-toolbar button.ql-active{
+    color: white;
+}
+
+
+
+
+
+
+
+
 
 
   
@@ -247,7 +365,7 @@
         gap: 0px;
     }
     .writting-section{
-        margin-top: 10px;
+        margin: 14px 0;
         padding: 0 9px;
         width: 100%;
     }
@@ -255,5 +373,7 @@
     
     
 }
+
+  
 
 

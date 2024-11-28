@@ -26,7 +26,7 @@ export class ChatService {
   constructor(
     private http: HttpClient
   ) {
-    debugger
+    
     this.startConnection();
     // this.listenToUserStatus();
   }

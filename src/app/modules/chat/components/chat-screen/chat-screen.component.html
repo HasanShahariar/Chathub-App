@@ -47,25 +47,18 @@
             'sender-message': item.ReceiverId === receiverId,
             
         }">
-            <!-- <span>{{item.Messages}}</span> -->
-            <span [innerHTML]="item.Messages"> </span>
-            <!-- <span >{{onContentChange(item.Messages)}} </span> -->
+
+            <span class="message" [innerHTML]="item.Messages"> </span>
+            <!-- <span class="message" [innerHTML]="getSanitizedHtml(item)"> </span> -->
+
+          
             
 
           </div>
         </div>
 
 
-        <!-- <div *ngFor="let item of messages">
-          <span>{{item.message}}</span>
-        </div> -->
-
-
-        <!-- <ul >
-          <li *ngFor="let item of chatHistory">
-            <strong>{{ msg.user }}:</strong> <span> {{ item.message }}</span>
-          </li>
-        </ul> -->
+   
       </div>
       <div class="writting-section">
 
@@ -78,12 +71,14 @@
             (keydown.enter)="sendMessage()" /> -->
 
 
-
-
-
-
             <div class="editor-wrapper">
-              <quill-editor [(ngModel)]="message" [styles]="{ height: '100px', width: '100%' }" (ngModelChange)="onContentChange($event)"></quill-editor>
+              <quill-editor 
+              class="quill-editor"
+              [(ngModel)]="message" 
+              [styles]="{ height: '100px'}"
+              [modules]="editorOptions.modules"
+              (keydown.enter)="sendMessage()"
+              ></quill-editor>
             </div>
             
             <!-- <div class="output">

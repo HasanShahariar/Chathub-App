@@ -10,7 +10,6 @@ import { SharedModule } from './modules/shared/shared.module';
 import { GlobalErrorHandler } from './modules/shared/services/global-error-handler.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -23,7 +22,7 @@ import { QuillModule } from 'ngx-quill';
     HttpClientModule,
     SharedModule,
     ToastModule,
-    QuillModule.forRoot()
+
   ],
   providers: [
     MessageService,
