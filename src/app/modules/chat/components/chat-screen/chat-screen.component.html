@@ -27,13 +27,14 @@
       </div>
     </aside>
     <div class="chat-section "
-      [ngClass]="{'d-none':isMobileScreen && isChatScreen==false, 'd-block':isMobileScreen && isChatScreen==false}">
+     >
       <div class="name-header">
         <img *ngIf="chatFriend?.ProfileImageUrl" [src]="imgUrl+chatFriend.ProfileImageUrl" alt="">
         <img *ngIf="!chatFriend?.ProfileImageUrl" [src]="defaultImgUrl" alt="">
-        <a *ngIf="isMobileScreen" class="btn-goto" (click)="goToList()"><i class="fa-solid fa-arrow-left"></i>
+        <!-- <a *ngIf="isMobileScreen" class="btn-goto" (click)="goToList()"><i class="fa-solid fa-arrow-left"></i>
 
-        </a> {{chatFriend?.FullName}}
+        </a>  -->
+        {{chatFriend?.FullName}}
       </div>
       <div class="chat-canvas" #chatContainer>
 
