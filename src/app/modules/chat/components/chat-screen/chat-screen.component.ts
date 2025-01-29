@@ -7,11 +7,6 @@ import { SharedService } from '../../../shared/services/shared.service';
 import { environment } from '../../../../environment';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
-
-
-
-
-
 @Component({
   selector: 'app-chat-screen',
   templateUrl: './chat-screen.component.html',
@@ -62,20 +57,16 @@ export class ChatScreenComponent implements OnInit {
   sanitizedContent: SafeHtml;
 
 
-
-
   editorOptions = {
     modules: {
       toolbar: [
         // [{ 'header': [1, 2, false] }],  
         // ['image', 'code-block']    
-               
         ['bold', 'italic', 'underline'],  
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
         [{ 'indent': '-1'}, { 'indent': '+1' }],        
 
       ],
-     
       emoji: true
     },
     placeholder: 'Compose an epic...',
@@ -93,7 +84,7 @@ export class ChatScreenComponent implements OnInit {
     // Quill.register('modules/imageResize', QuillImageResize);
 
 
-    // this._service.startConnection();
+    this._service.startConnection();
     if (window.innerWidth <= 768) {
       this.isMobileScreen = true;
       this.isChatScreen = false
@@ -241,7 +232,8 @@ export class ChatScreenComponent implements OnInit {
 
 
   sendMessage(): void {
-    
+    debugger
+    var fdfd = this.message.trim()
     if(this.message.trim() === ''){
       return
     }
